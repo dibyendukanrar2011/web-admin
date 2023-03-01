@@ -29,4 +29,15 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
+    
+    #[Route(path: '/redirect', name: 'app_auth_success_redirect')]
+    public function authSuccessRedirect(): Response
+    {
+        $user = $this->getUser();
+        $url = '/';
+        if(!$user) {
+
+        }
+        return $this->redirect($url);
+    }
 }
