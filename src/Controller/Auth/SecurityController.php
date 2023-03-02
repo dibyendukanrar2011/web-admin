@@ -35,8 +35,8 @@ class SecurityController extends AbstractController
     {
         $user = $this->getUser();
         $url = '/';
-        if(!$user) {
-
+        if($this->isGranted('ROLE_ADMIN')) {
+            $url = $this->generateUrl('app_admin_dashboard');
         }
         return $this->redirect($url);
     }
