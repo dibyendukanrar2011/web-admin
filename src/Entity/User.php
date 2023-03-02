@@ -217,12 +217,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isDeleted(string $status): self
+    public function isDeleted(): bool
     {
         $check = false;
         
-        if($this->status == 'Deleted')
+        if($this->status == 'Deleted') {
+            $check = true;
+        }
 
-        return $this;
+        return $check;
+    }
+
+    public function isActive(): bool
+    {
+        $check = false;
+        
+        if($this->status == 'Active') {
+            $check = true;
+        }
+
+        return $check;
     }
 }

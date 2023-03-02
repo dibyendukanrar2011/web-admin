@@ -19,6 +19,7 @@ class UserFixtures extends Fixture
         $user->setEmail('dibyendukanrar2011@gmail.com');
         $user->setPassword('$2y$13$252Obdb0sGD6zxfIdKTC.uyq/dqBKo7joIDs2h1nK7hNbhKDK1qSy');
         $user->setRoles(['ROLE_ADMIN']);
+        $user->setStatus('Active');
         
         $manager->persist($user);
         $manager->flush();
