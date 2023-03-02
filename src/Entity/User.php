@@ -50,6 +50,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updated = null;
 
+    #[ORM\Column(type: "string", columnDefinition: "ENUM('Active', 'Inactive', 'Deleted')")]
+    private ?string $status = null;
+
+    public function __construct()
+    {
+        $this->status = 'Inactive';
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -193,6 +201,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdated(\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function isDeleted(string $status): self
+    {
+        $check = false;
+        
+        if($this->status == 'Deleted')
 
         return $this;
     }
