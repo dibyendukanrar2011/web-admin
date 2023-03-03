@@ -34,8 +34,10 @@
 </head>
 
 <body id="page-top">
+
     <!-- Page Wrapper -->
     <div id="wrapper">
+
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -51,7 +53,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="{{path('app_admin_dashboard')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -60,51 +62,36 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-users-cog"></i>
-                <span>User</span>
-            </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="#">
-                        <i class="fas fa-fw fa-user-friends"></i>
-                        <span>List User</span>
-                    </a>
-                    
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-users-cog"></i>
+                    <span>User</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="#">
+                            <i class="fas fa-fw fa-user-friends"></i>
+                            <span>List User</span>
+                        </a>
+                        <a class="collapse-item" href="{{path('app_admin_add_user')}}">
+                            <i class="fas fa-fw fa-user-plus"></i>
+                            <span>List User</span>
+                        </a>
+                    </div>
                 </div>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                aria-expanded="true" aria-controls="collapsePages">
-                <i class="fas fa-fw fa-folder"></i>
-                <span>Pages</span>
-            </a>
-            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Login Screens:</h6>
-                    <a class="collapse-item" href="{{path('app_admin_add_user')}}">Login</a>
-                    <a class="collapse-item" href="register.html">Register</a>
-                    <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                    <div class="collapse-divider"></div>
-                    <h6 class="collapse-header">Other Pages:</h6>
-                    <a class="collapse-item" href="404.html">404 Page</a>
-                    <a class="collapse-item" href="blank.html">Blank Page</a>
-                </div>
-            </div>
-        </li>
+            </li>
 
         </ul>
         <!-- End of Sidebar -->
-        
+
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
             <div id="content">
+
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -317,6 +304,7 @@
                 
             </div>
             <!-- End of Main Content -->
+            
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -356,7 +344,24 @@
         </div>
     </div>
 
-    {% block javascripts %}{% endblock %}
+    {% block javascripts %}
+        <script>
+            $(document).ready(function () {
+                let path = window.location.href.split('?')[0];
+                $("#accordionSidebar a.nav-link").each(function () {
+                    if (this.href === path) {
+
+                        $(this).addClass("active");
+                        var level = $(this).parent();
+                        if (level.is('nav')) {
+                            level.parent().addClass("show");
+                            level.parent().addClass("active");
+                        }
+                    }
+                });
+            });
+        </script>
+    {% endblock %}
 </body>
 
 </html>
