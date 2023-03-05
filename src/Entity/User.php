@@ -53,6 +53,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: "string", columnDefinition: "ENUM('Active', 'Inactive', 'Deleted')")]
     private ?string $status = null;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dob = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $gender = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $profilePicture = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $address = null;
+
     public function __construct()
     {
         $this->status = 'Inactive';
@@ -237,5 +249,53 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $check;
+    }
+
+    public function getDob(): ?\DateTimeInterface
+    {
+        return $this->dob;
+    }
+
+    public function setDob(?\DateTimeInterface $dob): self
+    {
+        $this->dob = $dob;
+
+        return $this;
+    }
+
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    public function setGender(?string $gender): self
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    public function getProfilePicture(): ?string
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture(?string $profilePicture): self
+    {
+        $this->profilePicture = $profilePicture;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
     }
 }
