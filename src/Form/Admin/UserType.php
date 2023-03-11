@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class UserType extends AbstractType
 {
@@ -63,6 +64,17 @@ class UserType extends AbstractType
             ])
             ->add('profilePicture', FileType::class, [
                 'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '2048k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/gif',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a image',
+                    ])
+                ],
                 'attr' => [
                     'class' => 'form-control'
                 ]
@@ -81,8 +93,9 @@ class UserType extends AbstractType
                 'required' => true,
                 'choices' => [
                     '' => '',
-                    'Normal User' => 'ROLE_USER',
+                    'Normal User' => 'ROLE_WEB_USER',
                     'Admin' => 'ROLE_ADMIN',
+                    'Super Admin' => 'ROLE_SUPER_ADMIN',
                 ],
                 'attr' => ['class' => 'form-control']
             ])
