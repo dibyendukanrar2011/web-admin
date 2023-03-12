@@ -23,13 +23,43 @@ class UserController extends AbstractController
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    #[Route('/admin/add/user', name: 'app_admin_add_user')]
-    public function index(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger): Response
+    #[Route('/admin/list/user', name: 'app_admin_list_user')]
+    public function list(Request $request, ManagerRegistry $doctrine): Response
     {
-        $user = new User();
+        $recordPerPage = 10;
+        $em = $doctrine->getManager();
+        $query = $em->createQuery("SELECT
+            u.id,
+            CONCAT(u.firstName, ' ', u.lastName) AS fullName,
+            u.email,
+            u.cellphone,
+            u.gender,
+            u.status,
+            u.roles
+            FROM App:User u
+        ");
+        $query->setFirstResult(0);
+        $query->setMaxResults($recordPerPage);
+        $users = $query->getResult();
+
+        return $this->render('admin/user/list.html.twig', [
+            'title' => 'List User',
+            'users' => $users,
+            'recordPerPage' => $recordPerPage,
+        ]);
+    }
+
+    #[Route('/admin/manage/user/{id}', name: 'app_admin_manage_user')]
+    public function manage(int $id = -1, Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger): Response
+    {
+        $user = $doctrine->getRepository(User::class)->findOneBy(['id' => $id]);
+        if (!$user) {
+            $user = new User();
+        }
+
         $em = $doctrine->getManager();
         $form = $this->createForm(UserType::class, $user, [
-            'action' => $this->generateUrl('app_admin_add_user'),
+            'action' => $this->generateUrl('app_admin_manage_user', ['id' => $id]),
             'method' => 'POST',
         ]);
 

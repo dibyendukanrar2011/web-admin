@@ -60,11 +60,11 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">
+                        <a class="collapse-item" href="{{path('app_admin_list_user')}}">
                             <i class="fas fa-fw fa-user-friends"></i>
                             <span>List User</span>
                         </a>
-                        <a class="collapse-item" href="{{path('app_admin_add_user')}}">
+                        <a class="collapse-item" href="{{path('app_admin_manage_user', {id: -1})}}">
                             <i class="fas fa-fw fa-user-plus"></i>
                             <span>Add User</span>
                         </a>
@@ -348,8 +348,6 @@
         <script src="{{asset('/admin/vendor/datetimepicker-master/jquery.datetimepicker.full.js')}}"></script>
         
         <script src="{{asset('/admin/vendor/sweetalert2-11.7.3/sweetalert2.all.min.js')}}"></script>
-
-        date-picker
     {% endblock %}
     
     {% block javascripts %}
