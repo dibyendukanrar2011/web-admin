@@ -64,6 +64,7 @@ class UserType extends AbstractType
             ])
             ->add('profilePicture', FileType::class, [
                 'required' => false,
+                'mapped' => false,
                 'constraints' => [
                     new File([
                         'maxSize' => '2048k',

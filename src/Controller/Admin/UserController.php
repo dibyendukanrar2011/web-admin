@@ -103,7 +103,7 @@ class UserController extends AbstractController
                 $user->setPassword($this->passwordEncoder->hashPassword($user, $cellphone));
                 $em->persist($user);
                 $em->flush();
-                $this->addFlash('successMessage', 'User created!');
+                $this->addFlash('successMessage', 'User saved!');
                 return $this->redirect($request->headers->get('referer'));
             } else {
                 $errors = $form->getErrors(true, false);
