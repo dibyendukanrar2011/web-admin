@@ -70,11 +70,14 @@ class UserController extends AbstractController
                 $email = $form['email']->getData();
                 $cellphone = $form['cellphone']->getData();
                 $profilePictureFile = $form->get('profilePicture')->getData();
+                $password = $form->get('password')->getData();
 
-                if ($email) {
-                    $user->setUsername($email);
-                } else {
-                    $user->setUsername($cellphone);
+                if(!$user->getUsername()) {
+                    if ($email) {
+                        $user->setUsername($email);
+                    } else {
+                        $user->setUsername($cellphone);
+                    }
                 }
 
                 // handel profile pic
@@ -100,7 +103,13 @@ class UserController extends AbstractController
 
                     $user->setProfilePicture($newFilename);
                 }
-                $user->setPassword($this->passwordEncoder->hashPassword($user, $cellphone));
+
+                if ($password) {
+                    $user->setPassword($this->passwordEncoder->hashPassword($user, $password));
+                } elseif (!$user->getId()) { // time of ass user if password is blank default pass is cellphone
+                    $user->setPassword($this->passwordEncoder->hashPassword($user, $cellphone));
+                }
+
                 $em->persist($user);
                 $em->flush();
                 $this->addFlash('successMessage', 'User saved!');
@@ -117,8 +126,8 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render('admin/user/add.html.twig', [
-            'title' => 'Add User',
+        return $this->render('admin/user/manage.html.twig', [
+            'title' => $user->getId() ? 'Edit User' : 'Add User',
             'form' => $form->createView(),
         ]);
     }

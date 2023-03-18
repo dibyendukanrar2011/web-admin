@@ -110,6 +110,13 @@ class UserType extends AbstractType
                 ],
                 'attr' => ['class' => 'form-control']
             ])
+            ->add('password', TextType::class, [
+                'required' => false,
+                'mapped' => false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
             ->add('save', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary px-4 py-2'],
             ]);
