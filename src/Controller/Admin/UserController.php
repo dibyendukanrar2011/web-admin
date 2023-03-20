@@ -128,7 +128,44 @@ class UserController extends AbstractController
 
         return $this->render('admin/user/manage.html.twig', [
             'title' => $user->getId() ? 'Edit User' : 'Add User',
+            'user' => $user,
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/admin/delete/user/{user}', name: 'app_admin_delete_user')]
+    public function delete(User $user, ManagerRegistry $doctrine): Response
+    {
+        $em = $doctrine->getManager();
+        $user->setStatus('Deleted');
+        $em->persist($user);
+        $em->flush();
+        
+        $this->addFlash('successMessage', 'User Deleted!');
+        return $this->redirect($this->generateUrl('app_admin_list_user'));
+    }
+
+    #[Route('/admin/active/user/{user}', name: 'app_admin_active_user')]
+    public function active(User $user, ManagerRegistry $doctrine): Response
+    {
+        $em = $doctrine->getManager();
+        $user->setStatus('Active');
+        $em->persist($user);
+        $em->flush();
+        
+        $this->addFlash('successMessage', 'User Activated!');
+        return $this->redirect($this->generateUrl('app_admin_list_user'));
+    }
+
+    #[Route('/admin/inactive/user/{user}', name: 'app_admin_inactive_user')]
+    public function inactive(User $user, ManagerRegistry $doctrine): Response
+    {
+        $em = $doctrine->getManager();
+        $user->setStatus('Inactive');
+        $em->persist($user);
+        $em->flush();
+        
+        $this->addFlash('successMessage', 'User Inactivated!');
+        return $this->redirect($this->generateUrl('app_admin_list_user'));
     }
 }
