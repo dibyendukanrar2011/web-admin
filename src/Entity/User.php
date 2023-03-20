@@ -6,10 +6,16 @@ use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(
+    fields: ['cellphone'],
+    errorPath: 'cellphone',
+    message: 'This cellphone is already registered.',
+)]
 #[ORM\Table(name: '`web_user`')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -36,7 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $cellphone = null;
 
     #[ORM\Column(length: 255, nullable: true)]
