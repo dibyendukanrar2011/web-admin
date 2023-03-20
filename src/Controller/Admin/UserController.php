@@ -115,7 +115,7 @@ class UserController extends AbstractController
                 $this->addFlash('successMessage', 'User saved!');
                 return $this->redirect($request->headers->get('referer'));
             } else {
-                $errors = $form->getErrors(true, false);
+                $errors = $form->getErrors(true);
 
                 foreach ($errors as $error) {
                     if ($error instanceof FormError) {

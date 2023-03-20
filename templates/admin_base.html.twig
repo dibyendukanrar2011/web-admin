@@ -376,7 +376,7 @@
                     icon: 'success',
                     title: '{{message}}',
                     showConfirmButton: false,
-                    timer: 3000
+                    timer: 5000
                 })
             {% endfor %}
             {% for message in app.flashes('errorMessage') %}
@@ -384,7 +384,7 @@
                     icon: 'error',
                     title: '{{message}}',
                     showConfirmButton: false,
-                    timer: 3000
+                    timer: 5000
                 })
             {% endfor %}
         </script>
